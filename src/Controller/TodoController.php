@@ -98,6 +98,26 @@ class TodoController extends AbstractController
         }
         return $this->redirectToRoute('todo');
     }
+
+    /**
+     * @Route("/reset", name="resettodo")
+     */
+    public function reset(SessionInterface $session): Response
+    {
+        if (!$session->has('todos')) {
+            $this->addFlash('error', "La liste des todos est vide");
+        }
+        else{
+            $todos = [
+                'lundi' => 'HTML',
+                'mardi' => 'CSs',
+                'mercredi' => 'Js',
+                ];
+            $session->set('todos', $todos);
+            $this->addFlash('success', "Le todo a été réinisialiser avec succès");
+            return $this->redirectToRoute('todo');
+            }
+    }
 }
 
 
